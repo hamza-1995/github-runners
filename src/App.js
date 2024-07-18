@@ -1,58 +1,71 @@
 import React, { Component } from "react";
-import PhotoContextProvider from "./context/PhotoContext";
-import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
-import Header from "./components/Header";
-import Item from "./components/Item";
-import Search from "./components/Search";
-import NotFound from "./components/NotFound";
+import NavBar from "./components/navbar";
+import Counters from "./components/counters";
 
 class App extends Component {
-  // Prevent page reload, clear input, set URL and push history on submit
-  handleSubmit = (e, history, searchInput) => {
-    e.preventDefault();
-    e.currentTarget.reset();
-    let url = `/search/${searchInput}`;
-    history.push(url);
+  state = {
+    counters: [
+      { id: 1, value: 0 },
+      { id: 2, value: 0 },
+      { id: 3, value: 0 },
+      { id: 4, value: 0 },
+    ],
+  };
+
+  handleIncrement = (counter) => {
+    const counters = [...this.state.counters];
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counters[index] };
+    counters[index].value++;
+    this.setState({ counters });
+  };
+
+  handleDecrement = (counter) => {
+    const counters = [...this.state.counters];
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counters[index] };
+    counters[index].value--;
+    this.setState({ counters });
+  };
+
+  handleReset = () => {
+    const counters = this.state.counters.map((c) => {
+      c.value = 0;
+      return c;
+    });
+    this.setState({ counters });
+  };
+
+  handleDelete = (counterId) => {
+    const counters = this.state.counters.filter((c) => c.id !== counterId);
+    this.setState({ counters });
+  };
+
+  handleRestart = () => {
+    window.location.reload();
   };
 
   render() {
     return (
-      <PhotoContextProvider>
-        <HashRouter basename="/SnapScout">
-          <div className="container">
-            <Route
-              render={props => (
-                <Header
-                  handleSubmit={this.handleSubmit}
-                  history={props.history}
-                />
-              )}
+      <div className="main__wrap">
+        <main className="container">
+          <div className="card__box">
+            <NavBar
+              totalCounters={
+                this.state.counters.filter((c) => c.value > 0).length
+              }
             />
-            <Switch>
-              <Route
-                exact
-                path="/"
-                render={() => <Redirect to="/mountain" />}
-              />
-
-              <Route
-                path="/mountain"
-                render={() => <Item searchTerm="mountain" />}
-              />
-              <Route path="/beach" render={() => <Item searchTerm="beach" />} />
-              <Route path="/bird" render={() => <Item searchTerm="bird" />} />
-              <Route path="/food" render={() => <Item searchTerm="food" />} />
-              <Route
-                path="/search/:searchInput"
-                render={props => (
-                  <Search searchTerm={props.match.params.searchInput} />
-                )}
-              />
-              <Route component={NotFound} />
-            </Switch>
+            <Counters
+              counters={this.state.counters}
+              onReset={this.handleReset}
+              onIncrement={this.handleIncrement}
+              onDecrement={this.handleDecrement}
+              onDelete={this.handleDelete}
+              onRestart={this.handleRestart}
+            />
           </div>
-        </HashRouter>
-      </PhotoContextProvider>
+        </main>
+      </div>
     );
   }
 }
