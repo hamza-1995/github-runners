@@ -1,24 +1,37 @@
-# A simple counter-App using [React.js](https://reactjs.org)
+# React Image Compressor
 
-> **This tiny application is like adding,removing,deleting, resetting products which reflects in the total number of products into our shopping cart.**
+## Overview
 
-**This is a very basic app but useful to understand the React Components, states, Data Flow, parent to child etc. .**
+A simple image compressor built with [react](https://reactjs.org/) and [browser-image-compression](https://www.npmjs.com/package/browser-image-compression).
 
-## Live URL :-
+## Functionalities
 
-> [Counter App](https://obscure-waters-60500.herokuapp.com)
+- Compress Image By Reducing Resolution and Size
+- Offline Compression
 
-**OR your can do the following to run in your local machine**
+## Built With
 
-## Scripts
+- ReactJS
+- React Bootstrap
+- Browser Image Compression
 
-Install node modules
+## Development
 
-#### `npm install`
+1. Clone the repository and change directory.
 
-In the project directory, you can run:
+```
+git clone https://github.com/RaulB-masai/react-image-compressor.git
+cd react-image-compressor
+```
 
-#### `npm start`
+2. Install npm dependencies
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+npm install
+```
+
+3. Run the app locally.
+
+```
+npm start
+```
